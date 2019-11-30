@@ -36,11 +36,14 @@ public class MainActivity extends AppCompatActivity {
      * Set and initialize the view elements.
      */
     private void initializeView() {
-        findViewById(R.id.notify_me).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button_won).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startService(new Intent(MainActivity.this, FloatingViewService.class));
-                finish();
+            }
+        });
+        findViewById(R.id.button_lost).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
             }
         });
     }
@@ -62,5 +65,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startService(new Intent(MainActivity.this, FloatingViewService.class));
+        finish();
     }
 }

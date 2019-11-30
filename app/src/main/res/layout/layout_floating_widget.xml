@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/root_container"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         tools:ignore="UselessParent">
 
         <!--View while view is collapsed-->
@@ -17,14 +17,16 @@
             android:id="@+id/collapse_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:orientation="vertical"
             android:visibility="visible">
 
             <!--Icon of floating widget -->
             <ImageView
                 android:id="@+id/collapsed_iv"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="8dp"
                 android:src="@drawable/ic_android_circle"
                 tools:ignore="ContentDescription" />
@@ -44,7 +46,7 @@
             android:id="@+id/expanded_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#F8BBD0"
+            android:background="@color/colorGrayTransparent"
             android:gravity="center"
             android:visibility="visible">
 
@@ -68,13 +70,15 @@
 
             <Button
                 android:id="@+id/open_button"
+                android:background="@color/colorGreenLight"
                 android:layout_width="100dp"
                 android:layout_height="48dp"
                 android:src="@drawable/ic_open"
                 android:text="Ok"
+                android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/imageView_closeButton" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -105,24 +109,41 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="40dp"
                 android:text="Betting Amount"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinner" />
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
             <EditText
                 android:id="@+id/editText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginLeft="32dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginRight="32dp"
                 android:ems="10"
                 android:inputType="number"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView5"
+                app:layout_constraintStart_toStartOf="@+id/spinner"
                 app:layout_constraintTop_toTopOf="@+id/textView5" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="40dp"
+                android:text="Reset Data"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CheckBox"
+                app:layout_constraintStart_toStartOf="@+id/editText"
+                app:layout_constraintTop_toTopOf="@+id/textView" />
 
 
         </android.support.constraint.ConstraintLayout>

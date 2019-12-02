@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 
 public class FloatingViewService extends Service {
@@ -40,19 +39,13 @@ public class FloatingViewService extends Service {
                 PixelFormat.TRANSLUCENT);
 
         //Specify the view position
-        params.gravity = Gravity.TOP | Gravity.LEFT;        //Initially view will be added to top-left corner
+        params.gravity = Gravity.TOP | Gravity.RIGHT;        //Initially view will be added to top-left corner
         params.x = 0;
         params.y = 100;
 
         //Add the view to the window
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         mWindowManager.addView(mFloatingView, params);
-
-        //The root element of the collapsed view layout
-        final View collapsedView = mFloatingView.findViewById(R.id.collapse_view);
-        //The root element of the expanded view layout
-        final View expandedView = mFloatingView.findViewById(R.id.expanded_container);
-
 
         //Set the close button
         ImageView closeButtonCollapsed = (ImageView) mFloatingView.findViewById(R.id.close_btn);
@@ -64,58 +57,6 @@ public class FloatingViewService extends Service {
             }
         });
 
-//        //Set the view while floating view is expanded.
-//        //Set the play button.
-//        ImageView playButton = (ImageView) mFloatingView.findViewById(R.id.play_btn);
-//        playButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(FloatingViewService.this, "Playing the song.", Toast.LENGTH_LONG).show();
-//            }
-//        });
-//
-//        //Set the next button.
-//        ImageView nextButton = (ImageView) mFloatingView.findViewById(R.id.next_btn);
-//        nextButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(FloatingViewService.this, "Playing next song.", Toast.LENGTH_LONG).show();
-//            }
-//        });
-//
-//        //Set the pause button.
-//        ImageView prevButton = (ImageView) mFloatingView.findViewById(R.id.prev_btn);
-//        prevButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(FloatingViewService.this, "Playing previous song.", Toast.LENGTH_LONG).show();
-//            }
-//        });
-
-        //Set the close button
-        ImageView closeButton = (ImageView) mFloatingView.findViewById(R.id.imageView_closeButton);
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                collapsedView.setVisibility(View.VISIBLE);
-                expandedView.setVisibility(View.GONE);
-            }
-        });
-
-        //Open the application on thi button click
-        Button openButton = (Button) mFloatingView.findViewById(R.id.open_button);
-        openButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Open the application  click.
-                Intent intent = new Intent(FloatingViewService.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-
-                //close the service and remove view from the view hierarchy
-                stopSelf();
-            }
-        });
 
         //Drag and move floating view using user's touch action.
         mFloatingView.findViewById(R.id.root_container).setOnTouchListener(new View.OnTouchListener() {
@@ -145,11 +86,12 @@ public class FloatingViewService extends Service {
                         //So that is click event.
                         if (Xdiff < 10 && Ydiff < 10) {
                             if (isViewCollapsed()) {
-                                //When user clicks on the image view of the collapsed layout,
-                                //visibility of the collapsed layout will be changed to "View.GONE"
-                                //and expanded view will become visible.
-                                collapsedView.setVisibility(View.GONE);
-                                expandedView.setVisibility(View.VISIBLE);
+                                Intent intent = new Intent(FloatingViewService.this, Screen2Activity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+
+                                //close the service and remove view from the view hierarchy
+                                stopSelf();
                             }
                         }
                         return true;

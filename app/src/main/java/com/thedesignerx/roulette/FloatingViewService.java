@@ -39,7 +39,7 @@ public class FloatingViewService extends Service {
                 PixelFormat.TRANSLUCENT);
 
         //Specify the view position
-        params.gravity = Gravity.TOP | Gravity.RIGHT;        //Initially view will be added to top-left corner
+        params.gravity = Gravity.TOP | Gravity.LEFT;        //Initially view will be added to top-left corner
         params.x = 0;
         params.y = 100;
 

@@ -38,6 +38,14 @@ public class Screen2Activity extends AppCompatActivity {
      * Set and initialize the view elements.
      */
     private void initializeView() {
+        findViewById(R.id.imageView_closeButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startService(new Intent(Screen2Activity.this, FloatingViewService.class));
+                finish();
+            }
+        });
+
         Spinner spinner_currency = findViewById(R.id.spinner_currency);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.currencies));

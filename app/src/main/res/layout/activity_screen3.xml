@@ -12,7 +12,7 @@
     tools:context="com.thedesignerx.roulette.Screen3Activity">
 
     <ImageView
-        android:id="@+id/imageView_closeButton2"
+        android:id="@+id/imageView_closeButton"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/ic_close"
@@ -36,7 +36,7 @@
         android:layout_marginTop="128dp"
         android:text="Gain:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_closeButton2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_closeButton" />
 
     <TextView
         android:id="@+id/textView3"

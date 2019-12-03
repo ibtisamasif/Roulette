@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Roulette</string>
     <string name="title_activity_screen2">Screen2Activity</string>
+    <string name="settings">SETTINGS</string>
+    <string name="betting_currency">Betting Currency</string>
+    <string name="betting_amount">Betting Amount</string>
+    <string name="reset_data">Reset Data</string>
+    <string name="ok">OK</string>
+    <string name="gain">Gain:</string>
+    <string name="_0">0</string>
 </resources>

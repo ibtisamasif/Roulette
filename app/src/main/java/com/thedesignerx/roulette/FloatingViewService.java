@@ -68,12 +68,12 @@ public class FloatingViewService extends Service {
                         initialTouchY = event.getRawY();
                         return true;
                     case MotionEvent.ACTION_UP:
-                        int Xdiff = (int) (event.getRawX() - initialTouchX);
-                        int Ydiff = (int) (event.getRawY() - initialTouchY);
+                        int XDiff = (int) (event.getRawX() - initialTouchX);
+                        int YDiff = (int) (event.getRawY() - initialTouchY);
 
-                        //The check for Xdiff <10 && YDiff< 10 because sometime elements moves a little while clicking.
+                        //The check for XDiff <10 && YDiff< 10 because sometime elements moves a little while clicking.
                         //So that is click event.
-                        if (Xdiff < 10 && Ydiff < 10) {
+                        if (XDiff < 10 && YDiff < 10) {
                             if (isViewCollapsed()) {
                                 Intent intent = new Intent(FloatingViewService.this, Screen2Activity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

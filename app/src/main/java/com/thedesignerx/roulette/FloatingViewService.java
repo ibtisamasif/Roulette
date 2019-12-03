@@ -4,12 +4,12 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
 public class FloatingViewService extends Service {
 
@@ -47,17 +47,6 @@ public class FloatingViewService extends Service {
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         mWindowManager.addView(mFloatingView, params);
 
-//        //Set the close button
-//        ImageView closeButtonCollapsed = (ImageView) mFloatingView.findViewById(R.id.close_btn);
-//        closeButtonCollapsed.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //close the service and remove the from from the window
-//                stopSelf();
-//            }
-//        });
-
-
         //Drag and move floating view using user's touch action.
         mFloatingView.findViewById(R.id.root_container).setOnTouchListener(new View.OnTouchListener() {
             private int initialX;
@@ -94,6 +83,15 @@ public class FloatingViewService extends Service {
                                 stopSelf();
                             }
                         }
+
+                        DisplayMetrics displayMetrics = new DisplayMetrics();
+                        mWindowManager.getDefaultDisplay().getMetrics(displayMetrics);
+                        int height = displayMetrics.heightPixels;
+                        if (params.y > height * 0.8) {
+                            mFloatingView.setVisibility(View.GONE);
+                            stopSelf();
+                        }
+
                         return true;
                     case MotionEvent.ACTION_MOVE:
                         //Calculate the X and Y coordinates of the view.

@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.thedesignerx.roulette"
         minSdkVersion 15
-        targetSdkVersion 19
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
     }

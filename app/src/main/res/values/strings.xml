@@ -8,4 +8,11 @@
     <string name="ok">OK</string>
     <string name="gain">Gain:</string>
     <string name="_0">0</string>
+    <string name="divider">|</string>
+    <string name="sessions">Sessions:</string>
+    <string name="profit">Profit:</string>
+    <string name="bet">Bet</string>
+    <string name="on">on</string>
+    <string name="i_won">I Won</string>
+    <string name="i_lost">I Lost</string>
 </resources>

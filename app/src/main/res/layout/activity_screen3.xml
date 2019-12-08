@@ -174,7 +174,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="58dp"
         android:background="@drawable/shape_rectangle_dark_green_radius_10dp"
         android:text="@string/i_won"
         app:layout_constraintEnd_toStartOf="@+id/button_lost"

@@ -1,5 +1,6 @@
 package com.thedesignerx.roulette;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -27,12 +28,17 @@ public class Screen2Activity extends AppCompatActivity {
 
             //If the draw over permission is not available open the settings screen
             //to grant the permission.
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:" + getPackageName()));
-            startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
+            askPermission();
         } else {
             initializeView();
         }
+    }
+
+    @TargetApi(23)
+    private void askPermission() {
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:" + getPackageName()));
+        startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
     }
 
     /**

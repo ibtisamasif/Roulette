@@ -29,6 +29,7 @@ class Screen3Activity : AppCompatActivity() {
     private fun populateData() {
         val bundle = intent.extras
         if (bundle != null) {
+
             val bettingAmount = bundle.getInt(Screen2Activity.BETTING_AMOUNT)
             textView_betNumber.text = bettingAmount.toString()
 
@@ -40,6 +41,7 @@ class Screen3Activity : AppCompatActivity() {
             list.add("1-18")
             list.add("19-36")
             textView_betOn.text = RouletteUtils.getRandomElement(list)
+
         }
     }
 }

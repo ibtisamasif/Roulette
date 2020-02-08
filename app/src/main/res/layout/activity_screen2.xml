@@ -109,7 +109,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/editText"
+        app:layout_constraintStart_toStartOf="@+id/editText_bettingAmount"
         app:layout_constraintTop_toTopOf="@+id/textView" />
 
     <Button

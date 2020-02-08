@@ -32,11 +32,14 @@ class Screen3Activity : AppCompatActivity() {
             val bettingAmount = bundle.getInt(Screen2Activity.BETTING_AMOUNT)
             textView_betNumber.text = bettingAmount.toString()
 
-            val list: MutableList<Int> = ArrayList()
-            list.add(10)
-            list.add(20)
-            list.add(30)
-            textView_betOn.text = RouletteUtils.getRandomElement(list).toString()
+            val list: MutableList<String> = ArrayList()
+            list.add("Black")
+            list.add("Red")
+            list.add("Even")
+            list.add("Odd")
+            list.add("1-18")
+            list.add("19-36")
+            textView_betOn.text = RouletteUtils.getRandomElement(list)
         }
     }
 }

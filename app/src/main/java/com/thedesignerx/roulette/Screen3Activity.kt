@@ -12,11 +12,11 @@ class Screen3Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_screen3)
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        initializeView()
+        setListeners()
         populateData()
     }
 
-    private fun initializeView() {
+    private fun setListeners() {
         imageView_settingButton.setOnClickListener { finish() }
         imageView_closeButton.setOnClickListener {
             startService(Intent(this@Screen3Activity, FloatingViewService::class.java))
@@ -26,5 +26,17 @@ class Screen3Activity : AppCompatActivity() {
         button_lost.setOnClickListener { Toast.makeText(this@Screen3Activity, "Lost pressed", Toast.LENGTH_SHORT).show() }
     }
 
-    private fun populateData() {}
+    private fun populateData() {
+        val bundle = intent.extras
+        if (bundle != null) {
+            val bettingAmount = bundle.getInt(Screen2Activity.BETTING_AMOUNT)
+            textView_betNumber.text = bettingAmount.toString()
+
+            val list: MutableList<Int> = ArrayList()
+            list.add(10)
+            list.add(20)
+            list.add(30)
+            textView_betOn.text = RouletteUtils.getRandomElement(list).toString()
+        }
+    }
 }

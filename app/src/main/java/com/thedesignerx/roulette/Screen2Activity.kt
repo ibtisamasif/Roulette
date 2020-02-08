@@ -43,7 +43,7 @@ class Screen2Activity : AppCompatActivity() {
         editText_bettingAmount.setText(bettingAmount.toString())
         button_ok.setOnClickListener {
             val intent = Intent(this@Screen2Activity, Screen3Activity::class.java)
-            intent.putExtra(BETTING_AMOUNT, bettingAmount)
+            intent.putExtra(BETTING_AMOUNT, editText_bettingAmount.text.toString().toInt())
             startActivity(intent)
         }
     }
@@ -69,6 +69,6 @@ class Screen2Activity : AppCompatActivity() {
 
     companion object {
         private const val CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084
-        private const val BETTING_AMOUNT = "betting_amount"
+        const val BETTING_AMOUNT = "betting_amount"
     }
 }

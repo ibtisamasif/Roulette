@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_screen3.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class Screen3Activity : AppCompatActivity() {
     private var bettingAmount = 0
@@ -13,6 +15,8 @@ class Screen3Activity : AppCompatActivity() {
     private var sessions = 0
     private var profit = 0
     private val list: MutableList<String> = ArrayList()
+
+    private var bettingCurrency = ""
 
     private var lastGain = 0
 
@@ -49,6 +53,8 @@ class Screen3Activity : AppCompatActivity() {
         val bundle = intent.extras
         if (bundle != null) {
 
+            bettingCurrency = bundle.getString(Screen2Activity.BETTING_CURRENCY)
+
             list.add(getString(R.string.betting_box_black))
             list.add(getString(R.string.betting_box_red))
             list.add(getString(R.string.betting_box_even))
@@ -70,9 +76,26 @@ class Screen3Activity : AppCompatActivity() {
     }
 
     private fun updateUi() {
-        textView_gain.text = gain.toString()
+        val listOfCurrencies = resources.getStringArray(R.array.currencies)
+        when {
+            bettingCurrency.equals(listOfCurrencies[1]) -> {
+                textView_gain.text = bettingCurrency + gain.toString()
+                textView_profit.text = bettingCurrency + profit.toString()
+            }
+            bettingCurrency.equals(listOfCurrencies[1]) -> {
+                textView_gain.text = gain.toString() + bettingCurrency
+                textView_profit.text = profit.toString() + bettingCurrency
+            }
+            bettingCurrency.equals(listOfCurrencies[2]) -> {
+                textView_gain.text = gain.toString() + bettingCurrency
+                textView_profit.text = profit.toString() + bettingCurrency
+            }
+            bettingCurrency.equals(listOfCurrencies[3]) -> {
+                textView_gain.text = bettingCurrency + gain.toString()
+                textView_profit.text = bettingCurrency + profit.toString()
+            }
+        }
         textView_sessions.text = sessions.toString()
-        textView_profit.text = profit.toString()
         textView_betNumber.text = bettingAmount.toString()
         textView_betOn.text = RouletteUtils.getRandomElement(list)
     }

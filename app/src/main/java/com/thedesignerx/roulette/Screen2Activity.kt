@@ -55,6 +55,7 @@ class Screen2Activity : AppCompatActivity() {
                 }
                 else -> {
                     val intent = Intent(this@Screen2Activity, Screen3Activity::class.java)
+                    intent.putExtra(BETTING_CURRENCY, spinner_currency.selectedItem.toString())
                     intent.putExtra(BETTING_AMOUNT, editText_bettingAmount.text.toString().toInt())
                     intent.putExtra(IS_RESET_TRUE, checkBox_reset.isChecked)
                     startActivity(intent)
@@ -85,6 +86,7 @@ class Screen2Activity : AppCompatActivity() {
 
     companion object {
         private const val CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084
+        const val BETTING_CURRENCY = "betting_currency"
         const val BETTING_AMOUNT = "betting_amount"
         const val IS_RESET_TRUE = "is_reset_true"
     }

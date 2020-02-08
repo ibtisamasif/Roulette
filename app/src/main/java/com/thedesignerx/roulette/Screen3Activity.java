@@ -2,7 +2,7 @@ package com.thedesignerx.roulette;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -15,13 +15,14 @@ public class Screen3Activity extends AppCompatActivity {
         setContentView(R.layout.activity_screen3);
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         initializeView();
+        populateData();
     }
 
     private void initializeView() {
         findViewById(R.id.imageView_settingButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(Screen3Activity.this, "Settings screen", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
 
@@ -45,5 +46,9 @@ public class Screen3Activity extends AppCompatActivity {
                 Toast.makeText(Screen3Activity.this, "Lost pressed", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void populateData() {
+        
     }
 }

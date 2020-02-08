@@ -6,15 +6,19 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 public class Screen2Activity extends AppCompatActivity {
     private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
+    private static final String BETTING_AMOUNT = "betting_amount";
+    private int bettingAmount = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +63,14 @@ public class Screen2Activity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_currency.setAdapter(adapter);
 
+        EditText editText_bettingAmount = findViewById(R.id.editText_bettingAmount);
+        editText_bettingAmount.setText(Integer.toString(bettingAmount));
+
         findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Screen2Activity.this, Screen3Activity.class);
+                intent.putExtra(BETTING_AMOUNT, bettingAmount);
                 startActivity(intent);
             }
         });

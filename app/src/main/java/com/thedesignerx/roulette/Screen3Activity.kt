@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_screen3.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 class Screen3Activity : AppCompatActivity() {

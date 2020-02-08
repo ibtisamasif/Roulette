@@ -19,11 +19,7 @@ class Screen2Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_screen2)
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        //Check if the application has draw over other apps permission or not?
-//This permission is by default available for API<23. But for API > 23
-//you have to ask for the permission in runtime.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) { //If the draw over permission is not available open the settings screen
-//to grant the permission.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
             askPermission()
         } else {
             initializeView()
@@ -32,24 +28,19 @@ class Screen2Activity : AppCompatActivity() {
 
     @TargetApi(23)
     private fun askPermission() {
-        val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:$packageName"))
+        val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName"))
         startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION)
     }
 
-    /**
-     * Set and initialize the view elements.
-     */
     private fun initializeView() {
         imageView_closeButton.setOnClickListener {
             startService(Intent(this@Screen2Activity, FloatingViewService::class.java))
             finish()
         }
-        val adapter = ArrayAdapter(this,
-                android.R.layout.simple_spinner_item, resources.getStringArray(R.array.currencies))
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.currencies))
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner_currency.adapter = adapter
-        editText_bettingAmount.setText(Integer.toString(bettingAmount))
+        editText_bettingAmount.setText(bettingAmount.toString())
         button_ok.setOnClickListener {
             val intent = Intent(this@Screen2Activity, Screen3Activity::class.java)
             intent.putExtra(BETTING_AMOUNT, bettingAmount)
@@ -58,13 +49,11 @@ class Screen2Activity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == CODE_DRAW_OVER_OTHER_APP_PERMISSION) { //Check if the permission is granted or not.
+        if (requestCode == CODE_DRAW_OVER_OTHER_APP_PERMISSION) {
             if (resultCode == Activity.RESULT_OK) {
                 initializeView()
-            } else { //Permission is not available
-                Toast.makeText(this,
-                        "Draw over other app permission not available. Closing the application",
-                        Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Draw over other app permission not available. Closing the application", Toast.LENGTH_SHORT).show()
                 finish()
             }
         } else {

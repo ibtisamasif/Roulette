@@ -14,10 +14,10 @@ class Screen3Activity : AppCompatActivity() {
     private var sessions = 0
     private var profit = 0
     private val list: MutableList<String> = ArrayList()
-
     private var bettingCurrency = ""
-
     private var lastGain = 0
+    private var finalBet = 0
+    var isNewSession = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,10 +41,12 @@ class Screen3Activity : AppCompatActivity() {
             Toast.makeText(this@Screen3Activity, getString(R.string.resetting), Toast.LENGTH_SHORT).show()
         }
         button_won.setOnClickListener {
-
+            gain += bettingAmount
+            updateUi()
         }
         button_lost.setOnClickListener {
-
+            gain -= bettingAmount
+            updateUi()
         }
     }
 
@@ -70,6 +72,12 @@ class Screen3Activity : AppCompatActivity() {
 
             bettingAmount = bundle.getInt(Screen2Activity.BETTING_AMOUNT)
 
+            if (isNewSession) {
+                finalBet = bettingAmount * 1
+            } else {
+                finalBet = bettingAmount * 2
+            }
+
             updateUi()
         }
     }
@@ -77,13 +85,13 @@ class Screen3Activity : AppCompatActivity() {
     private fun updateUi() {
         val listOfCurrencies = resources.getStringArray(R.array.currencies)
         when {
+            bettingCurrency.equals(listOfCurrencies[0]) -> {
+                textView_gain.text = gain.toString() + bettingCurrency
+                textView_profit.text = profit.toString() + bettingCurrency
+            }
             bettingCurrency.equals(listOfCurrencies[1]) -> {
                 textView_gain.text = bettingCurrency + gain.toString()
                 textView_profit.text = bettingCurrency + profit.toString()
-            }
-            bettingCurrency.equals(listOfCurrencies[1]) -> {
-                textView_gain.text = gain.toString() + bettingCurrency
-                textView_profit.text = profit.toString() + bettingCurrency
             }
             bettingCurrency.equals(listOfCurrencies[2]) -> {
                 textView_gain.text = gain.toString() + bettingCurrency
@@ -95,7 +103,7 @@ class Screen3Activity : AppCompatActivity() {
             }
         }
         textView_sessions.text = sessions.toString()
-        textView_betNumber.text = bettingAmount.toString()
+        textView_betNumber.text = finalBet.toString()
         textView_betOn.text = RouletteUtils.getRandomElement(list)
     }
 }

@@ -48,10 +48,10 @@ class Screen2Activity : AppCompatActivity() {
         button_ok.setOnClickListener {
             when {
                 editText_bettingAmount.text.toString() == "" -> {
-                    editText_bettingAmount.error = "Please enter betting amount"
+                    editText_bettingAmount.error = getString(R.string.please_enter_betting_amount)
                 }
                 editText_bettingAmount.text.toString().toInt() == 0 -> {
-                    editText_bettingAmount.error = "Please enter amount greater than 0"
+                    editText_bettingAmount.error = getString(R.string.please_enter_amount_greater_than)
                 }
                 else -> {
                     val intent = Intent(this@Screen2Activity, Screen3Activity::class.java)

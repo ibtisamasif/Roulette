@@ -35,10 +35,14 @@ class Screen3Activity : AppCompatActivity() {
             profit -= lastGain
             sessions += 1
             updateUi()
-            Toast.makeText(this@Screen3Activity, "Resetting", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@Screen3Activity, getString(R.string.resetting), Toast.LENGTH_SHORT).show()
         }
-        button_won.setOnClickListener { Toast.makeText(this@Screen3Activity, "Won pressed", Toast.LENGTH_SHORT).show() }
-        button_lost.setOnClickListener { Toast.makeText(this@Screen3Activity, "Lost pressed", Toast.LENGTH_SHORT).show() }
+        button_won.setOnClickListener {
+
+        }
+        button_lost.setOnClickListener {
+
+        }
     }
 
     private fun populateData() {

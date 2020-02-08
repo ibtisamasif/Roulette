@@ -13,4 +13,11 @@
     <string name="on">on</string>
     <string name="i_won">I Won</string>
     <string name="i_lost">I Lost</string>
+    <string name="draw_over_other_app_permission_not_available">Draw over other app permission not available. Closing the application</string>
+    <string name="betting_box_black">Black</string>
+    <string name="betting_box_red">Red</string>
+    <string name="betting_box_even">Even</string>
+    <string name="betting_box_odd">Odd</string>
+    <string name="betting_box_1_to_18">1-18</string>
+    <string name="betting_box_19_to_36">19-36</string>
 </resources>

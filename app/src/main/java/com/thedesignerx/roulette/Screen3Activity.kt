@@ -121,19 +121,19 @@ class Screen3Activity : AppCompatActivity() {
 
         val listOfCurrencies = resources.getStringArray(R.array.currencies)
         when {
-            bettingCurrency.equals(listOfCurrencies[0]) -> {
+            bettingCurrency == listOfCurrencies[0] -> {
                 textView_gain.text = gain.toString() + bettingCurrency
                 textView_profit.text = profit.toString() + bettingCurrency
             }
-            bettingCurrency.equals(listOfCurrencies[1]) -> {
+            bettingCurrency == listOfCurrencies[1] -> {
                 textView_gain.text = bettingCurrency + gain.toString()
                 textView_profit.text = bettingCurrency + profit.toString()
             }
-            bettingCurrency.equals(listOfCurrencies[2]) -> {
+            bettingCurrency == listOfCurrencies[2] -> {
                 textView_gain.text = gain.toString() + bettingCurrency
                 textView_profit.text = profit.toString() + bettingCurrency
             }
-            bettingCurrency.equals(listOfCurrencies[3]) -> {
+            bettingCurrency == listOfCurrencies[3] -> {
                 textView_gain.text = bettingCurrency + gain.toString()
                 textView_profit.text = bettingCurrency + profit.toString()
             }

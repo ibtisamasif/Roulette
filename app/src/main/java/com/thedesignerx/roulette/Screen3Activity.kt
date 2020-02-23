@@ -1,5 +1,6 @@
 package com.thedesignerx.roulette
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
@@ -47,14 +48,11 @@ class Screen3Activity : AppCompatActivity() {
             finish()
         }
         imageView_reset.setOnClickListener {
-            // Reset current session and removes current gain from profit and adds one session count
             if (profit > 0) {
                 profit -= lastGain
                 sessions += 1
                 updateUi()
                 Toast.makeText(this@Screen3Activity, getString(R.string.resetting), Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this@Screen3Activity, "profit < 0", Toast.LENGTH_SHORT).show()
             }
         }
         button_won.setOnClickListener {
@@ -65,7 +63,7 @@ class Screen3Activity : AppCompatActivity() {
                 } else {
                     if (finalBet != (gain * -1)) {
                         sessions += 1
-                        Toast.makeText(this@Screen3Activity, "Session completed ".plus(bettingAmount).plus(" amount has been added to your total profits."), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@Screen3Activity, getString(R.string.session_completed).plus(Constants.SPACE_STRING).plus(bettingCurrency).plus(bettingAmount).plus(" amount has been added to your total profits."), Toast.LENGTH_SHORT).show()
                     }
                     lastGain = (finalBet - (gain * -1))
                     profit += lastGain
@@ -75,12 +73,10 @@ class Screen3Activity : AppCompatActivity() {
             } else {
                 lastGain = (finalBet - (gain * -1))
                 profit += lastGain
-
                 gain = 0
                 sessions += 1
                 finalBet = bettingAmount
-                Toast.makeText(this@Screen3Activity, "Session completed ".plus(bettingAmount).plus(" amount has been added to your total profits."), Toast.LENGTH_SHORT).show()
-
+                Toast.makeText(this@Screen3Activity, getString(R.string.session_completed).plus(Constants.SPACE_STRING).plus(bettingCurrency).plus(bettingAmount).plus(" amount has been added to your total profits."), Toast.LENGTH_SHORT).show()
             }
             updateUi()
         }
@@ -110,6 +106,7 @@ class Screen3Activity : AppCompatActivity() {
     }
 
 
+    @SuppressLint("SetTextI18n")
     private fun updateUi() {
 
         val listOfCurrencies = resources.getStringArray(R.array.currencies)

@@ -23,4 +23,5 @@
     <string name="resetting">Resetting</string>
     <string name="please_enter_betting_amount">Please enter betting amount</string>
     <string name="please_enter_amount_greater_than">Please enter amount greater than 0</string>
+    <string name="session_completed">Session completed</string>
 </resources>

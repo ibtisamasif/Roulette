@@ -44,6 +44,7 @@ class Screen2Activity : AppCompatActivity() {
         spinner_currency.adapter = adapter
 
         editText_bettingAmount.setText(bettingAmount.toString())
+        editText_bettingAmount.setSelection(bettingAmount.toString().length)
 
         button_ok.setOnClickListener {
             when {

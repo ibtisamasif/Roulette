@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_screen3.*
-import kotlin.collections.ArrayList
 
 class Screen3Activity : AppCompatActivity() {
     private var isResetTrue: Boolean = false
@@ -19,7 +18,6 @@ class Screen3Activity : AppCompatActivity() {
     private var bettingCurrency = ""
     private var lastGain = 0
     private var finalBet = 0
-    var isNewSession = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,9 +28,16 @@ class Screen3Activity : AppCompatActivity() {
             bettingAmount = bundle!!.getInt(Screen2Activity.BETTING_AMOUNT)
             bettingCurrency = bundle!!.getString(Screen2Activity.BETTING_CURRENCY)
             isResetTrue = bundle!!.getBoolean(Screen2Activity.IS_RESET_TRUE)
+            initVariables()
             setListeners()
             populateData()
         }
+    }
+
+    private fun initVariables() {
+        gain = 0
+        sessions += 1
+        finalBet = bettingAmount
     }
 
     private fun setListeners() {
@@ -53,32 +58,35 @@ class Screen3Activity : AppCompatActivity() {
             }
         }
         button_won.setOnClickListener {
-            if (gain / bettingAmount <= -4) {
-                //User is asked to bet 1x bet more that their current negative gain.
-                finalBet = (gain * -1) + bettingAmount
-                updateUi()
-            } else if (gain / bettingAmount <= -2) {
-                gain += bettingAmount
-                finalBet = 2 * bettingAmount
-                updateUi()
-            } else if (gain / bettingAmount <= -1){
-                //Session ends and gain(1xbet) is added to total profit
-                isNewSession = true
-                lastGain = bettingAmount
+            if (gain < 0) {
+                if (finalBet < (gain * -1)) {
+                    gain += finalBet
+                    finalBet = (gain * -1) + bettingAmount
+                } else {
+                    if (finalBet != (gain * -1)) {
+                        sessions += 1
+                        Toast.makeText(this@Screen3Activity, "Session completed ".plus(bettingAmount).plus(" amount has been added to your total profits."), Toast.LENGTH_SHORT).show()
+                    }
+                    lastGain = (finalBet - (gain * -1))
+                    profit += lastGain
+                    gain = 0
+                    finalBet = bettingAmount
+                }
+            } else {
+                lastGain = (finalBet - (gain * -1))
                 profit += lastGain
-                updateUi()
+
+                gain = 0
+                sessions += 1
+                finalBet = bettingAmount
+                Toast.makeText(this@Screen3Activity, "Session completed ".plus(bettingAmount).plus(" amount has been added to your total profits."), Toast.LENGTH_SHORT).show()
+
             }
-            if (finalBet > gain) {
-                //Session ends and gain(1xbet) is added to total profit
-//                isNewSession = true
-                lastGain = bettingAmount
-                profit += lastGain
-                updateUi()
-            }
+            updateUi()
         }
         button_lost.setOnClickListener {
+            gain -= finalBet
             finalBet = bettingAmount * 1
-            gain -= bettingAmount
             updateUi()
         }
     }
@@ -98,42 +106,27 @@ class Screen3Activity : AppCompatActivity() {
             sessions = 0
             profit = 0
         }
-
         updateUi()
     }
 
 
     private fun updateUi() {
-        if (isNewSession) {
-            isNewSession = false
-            //A new session starts and gain is reset to 0
-            gain = 0
-            sessions += 1
-
-            //chk
-            finalBet = bettingAmount
-        }
-
-//        else {
-//            finalBet = bettingAmount * 2
-//        }
-
 
         val listOfCurrencies = resources.getStringArray(R.array.currencies)
-        when {
-            bettingCurrency == listOfCurrencies[0] -> {
+        when (bettingCurrency) {
+            listOfCurrencies[0] -> {
                 textView_gain.text = gain.toString() + bettingCurrency
                 textView_profit.text = profit.toString() + bettingCurrency
             }
-            bettingCurrency == listOfCurrencies[1] -> {
+            listOfCurrencies[1] -> {
                 textView_gain.text = bettingCurrency + gain.toString()
                 textView_profit.text = bettingCurrency + profit.toString()
             }
-            bettingCurrency == listOfCurrencies[2] -> {
+            listOfCurrencies[2] -> {
                 textView_gain.text = gain.toString() + bettingCurrency
                 textView_profit.text = profit.toString() + bettingCurrency
             }
-            bettingCurrency == listOfCurrencies[3] -> {
+            listOfCurrencies[3] -> {
                 textView_gain.text = bettingCurrency + gain.toString()
                 textView_profit.text = bettingCurrency + profit.toString()
             }

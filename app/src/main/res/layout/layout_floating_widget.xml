@@ -5,14 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!--Root container-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/root_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="UselessParent">
 
-        <!--View while view is collapsed-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/collapse_view"
             android:layout_width="wrap_content"
@@ -26,12 +24,11 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <!--Icon of floating widget -->
             <ImageView
                 android:id="@+id/collapsed_iv"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_android_circle"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_floating"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />

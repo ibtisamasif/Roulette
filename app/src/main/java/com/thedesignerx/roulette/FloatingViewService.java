@@ -1,7 +1,9 @@
 package com.thedesignerx.roulette;
 
+import android.app.Activity;
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.IBinder;
@@ -46,10 +48,13 @@ public class FloatingViewService extends Service {
                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
 
+        SharedPreferences sp = getSharedPreferences("roulette", Activity.MODE_PRIVATE);
+        int paramx = sp.getInt("paramx", 0);
+        int paramsy = sp.getInt("paramy", 100);
         //Specify the view position
         params.gravity = Gravity.TOP | Gravity.LEFT;        //Initially view will be added to top-left corner
-        params.x = 0;
-        params.y = 100;
+        params.x = paramx;
+        params.y = paramsy;
 
         //Add the view to the window
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
@@ -105,6 +110,13 @@ public class FloatingViewService extends Service {
                         //Calculate the X and Y coordinates of the view.
                         params.x = initialX + (int) (event.getRawX() - initialTouchX);
                         params.y = initialY + (int) (event.getRawY() - initialTouchY);
+
+                        //store values in persistant storage
+                        SharedPreferences sp = getSharedPreferences("roulette", Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putInt("paramx", params.x);
+                        editor.putInt("paramy", params.y);
+                        editor.commit();
 
                         //Update the layout with new X & Y coordinate
                         mWindowManager.updateViewLayout(mFloatingView, params);

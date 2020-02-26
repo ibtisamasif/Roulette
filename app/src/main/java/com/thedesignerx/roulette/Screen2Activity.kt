@@ -14,10 +14,13 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_screen2.*
 
 class Screen2Activity : AppCompatActivity() {
+
     private val bettingAmount = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_screen2)
+        fa = this
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
             askPermission()
@@ -86,6 +89,7 @@ class Screen2Activity : AppCompatActivity() {
     }
 
     companion object {
+        lateinit var fa: Activity
         private const val CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084
         const val BETTING_CURRENCY = "betting_currency"
         const val BETTING_AMOUNT = "betting_amount"

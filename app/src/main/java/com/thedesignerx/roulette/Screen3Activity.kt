@@ -46,6 +46,7 @@ class Screen3Activity : AppCompatActivity() {
         imageView_closeButton.setOnClickListener {
             startService(Intent(this@Screen3Activity, FloatingViewService::class.java))
             finish()
+            Screen2Activity.fa.finish()
         }
         imageView_reset.setOnClickListener {
             if (profit > 0) {

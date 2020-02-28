@@ -1,6 +1,7 @@
 package com.thedesignerx.roulette
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
@@ -26,6 +27,7 @@ class Screen3Activity : AppCompatActivity() {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         bundle = intent.extras
         if (bundle != null) {
+            profit = getProfitFromStorage()
             bettingAmount = bundle!!.getInt(Screen2Activity.BETTING_AMOUNT)
             bettingCurrency = bundle!!.getString(Screen2Activity.BETTING_CURRENCY)
             isResetTrue = bundle!!.getBoolean(Screen2Activity.IS_RESET_TRUE)
@@ -132,5 +134,19 @@ class Screen3Activity : AppCompatActivity() {
         textView_sessions.text = sessions.toString()
         textView_betNumber.text = finalBet.toString()
         textView_betOn.text = RouletteUtils.getRandomElement(list)
+
+        saveProfitToStorage(profit)
+    }
+
+    private fun saveProfitToStorage(profit: Int) {
+        val sp = getSharedPreferences("roulette", Activity.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putInt("profit", profit)
+        editor.commit()
+    }
+
+    private fun getProfitFromStorage(): Int {
+        val sp = getSharedPreferences("roulette", Activity.MODE_PRIVATE)
+        return sp.getInt("profit", 0)
     }
 }

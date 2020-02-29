@@ -38,7 +38,7 @@ class Screen2Activity : AppCompatActivity() {
     private fun initializeView() {
 
         imageView_closeButton.setOnClickListener {
-            startService(Intent(this@Screen2Activity, FloatingViewService::class.java))
+            startService(Intent(this@Screen2Activity, FloatingWidgetService::class.java))
             finish()
         }
 
@@ -84,7 +84,7 @@ class Screen2Activity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        startService(Intent(this@Screen2Activity, FloatingViewService::class.java))
+        startService(Intent(this@Screen2Activity, FloatingWidgetService::class.java))
         finish()
     }
 

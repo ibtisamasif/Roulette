@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
+@Deprecated
 public class FloatingViewService extends Service {
 
     private WindowManager mWindowManager;

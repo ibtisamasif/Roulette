@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.thedesignerx.roulette.Screen2Activity">
+    tools:context=".SettingsActivity">
 
     <ImageView
         android:id="@+id/imageView_closeButton"

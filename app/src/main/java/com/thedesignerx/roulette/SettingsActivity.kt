@@ -11,15 +11,15 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_screen2.*
+import kotlinx.android.synthetic.main.activity_settings.*
 
-class Screen2Activity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity() {
 
     private val bettingAmount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_screen2)
+        setContentView(R.layout.activity_settings)
         fa = this
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
@@ -38,7 +38,7 @@ class Screen2Activity : AppCompatActivity() {
     private fun initializeView() {
 
         imageView_closeButton.setOnClickListener {
-            startService(Intent(this@Screen2Activity, FloatingWidgetService::class.java))
+            startService(Intent(this@SettingsActivity, FloatingWidgetService::class.java))
             finish()
         }
 
@@ -58,7 +58,7 @@ class Screen2Activity : AppCompatActivity() {
                     editText_bettingAmount.error = getString(R.string.please_enter_amount_greater_than)
                 }
                 else -> {
-                    val intent = Intent(this@Screen2Activity, Screen3Activity::class.java)
+                    val intent = Intent(this@SettingsActivity, PredictorActivity::class.java)
                     intent.putExtra(BETTING_CURRENCY, spinner_currency.selectedItem.toString())
                     intent.putExtra(BETTING_AMOUNT, editText_bettingAmount.text.toString().toInt())
                     intent.putExtra(IS_RESET_TRUE, checkBox_reset.isChecked)
@@ -84,7 +84,7 @@ class Screen2Activity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        startService(Intent(this@Screen2Activity, FloatingWidgetService::class.java))
+        startService(Intent(this@SettingsActivity, FloatingWidgetService::class.java))
         finish()
     }
 

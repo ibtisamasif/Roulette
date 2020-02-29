@@ -7,9 +7,9 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_screen3.*
+import kotlinx.android.synthetic.main.activity_predictor.*
 
-class Screen3Activity : AppCompatActivity() {
+class PredictorActivity : AppCompatActivity() {
     private var isResetTrue: Boolean = false
     private var bundle: Bundle? = null
     private var bettingAmount = 0
@@ -23,14 +23,14 @@ class Screen3Activity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_screen3)
+        setContentView(R.layout.activity_predictor)
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         bundle = intent.extras
         if (bundle != null) {
             profit = getProfitFromStorage()
-            bettingAmount = bundle!!.getInt(Screen2Activity.BETTING_AMOUNT)
-            bettingCurrency = bundle!!.getString(Screen2Activity.BETTING_CURRENCY)
-            isResetTrue = bundle!!.getBoolean(Screen2Activity.IS_RESET_TRUE)
+            bettingAmount = bundle!!.getInt(SettingsActivity.BETTING_AMOUNT)
+            bettingCurrency = bundle!!.getString(SettingsActivity.BETTING_CURRENCY)
+            isResetTrue = bundle!!.getBoolean(SettingsActivity.IS_RESET_TRUE)
             initVariables()
             setListeners()
             populateData()
@@ -46,16 +46,16 @@ class Screen3Activity : AppCompatActivity() {
     private fun setListeners() {
         imageView_settingButton.setOnClickListener { finish() }
         imageView_closeButton.setOnClickListener {
-            startService(Intent(this@Screen3Activity, FloatingWidgetService::class.java))
+            startService(Intent(this@PredictorActivity, FloatingWidgetService::class.java))
             finish()
-            Screen2Activity.fa.finish()
+            SettingsActivity.fa.finish()
         }
         imageView_reset.setOnClickListener {
             if (profit > 0) {
                 profit -= lastGain
                 sessions += 1
                 updateUi()
-                Toast.makeText(this@Screen3Activity, getString(R.string.resetting), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@PredictorActivity, getString(R.string.resetting), Toast.LENGTH_SHORT).show()
             }
         }
         button_won.setOnClickListener {
@@ -66,7 +66,7 @@ class Screen3Activity : AppCompatActivity() {
                 } else {
                     if (finalBet != (gain * -1)) {
                         sessions += 1
-                        Toast.makeText(this@Screen3Activity, getString(R.string.session_completed).plus(Constants.SPACE_STRING).plus(bettingCurrency).plus(bettingAmount).plus(" amount has been added to your total profits."), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@PredictorActivity, getString(R.string.session_completed).plus(Constants.SPACE_STRING).plus(bettingCurrency).plus(bettingAmount).plus(" amount has been added to your total profits."), Toast.LENGTH_SHORT).show()
                     }
                     lastGain = (finalBet - (gain * -1))
                     profit += lastGain
@@ -79,7 +79,7 @@ class Screen3Activity : AppCompatActivity() {
                 gain = 0
                 sessions += 1
                 finalBet = bettingAmount
-                Toast.makeText(this@Screen3Activity, getString(R.string.session_completed).plus(Constants.SPACE_STRING).plus(bettingCurrency).plus(bettingAmount).plus(" amount has been added to your total profits."), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@PredictorActivity, getString(R.string.session_completed).plus(Constants.SPACE_STRING).plus(bettingCurrency).plus(bettingAmount).plus(" amount has been added to your total profits."), Toast.LENGTH_SHORT).show()
             }
             updateUi()
         }

@@ -416,7 +416,7 @@ public class FloatingWidgetService extends Service {
 
     /*  on Floating widget click show expanded view  */
     private void onFloatingWidgetClick() {
-        Intent intent = new Intent(FloatingWidgetService.this, Screen2Activity.class);
+        Intent intent = new Intent(FloatingWidgetService.this, SettingsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

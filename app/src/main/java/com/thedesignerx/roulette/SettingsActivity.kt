@@ -12,6 +12,8 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_settings.*
+import kotlin.system.exitProcess
+
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -40,6 +42,11 @@ class SettingsActivity : AppCompatActivity() {
         imageView_closeButton.setOnClickListener {
             startService(Intent(this@SettingsActivity, FloatingWidgetService::class.java))
             finish()
+        }
+
+        imageView_closeApp.setOnClickListener {
+            stopService(Intent(this@SettingsActivity, FloatingWidgetService::class.java))
+            exitProcess(0)
         }
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.currencies))

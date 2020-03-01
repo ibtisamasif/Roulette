@@ -11,10 +11,9 @@ import kotlinx.android.synthetic.main.activity_predictor.*
 
 class PredictorActivity : AppCompatActivity() {
     private var isResetTrue: Boolean = false
-    private var bundle: Bundle? = null
     private var bettingAmount = 0
     private var gain = 0
-    private var sessions = 0
+    private var sessions = 1
     private var profit = 0
     private val list: MutableList<String> = ArrayList()
     private var bettingCurrency = ""
@@ -25,30 +24,52 @@ class PredictorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_predictor)
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        bundle = intent.extras
-        if (bundle != null) {
-            profit = getProfitFromStorage()
-            bettingAmount = bundle!!.getInt(SettingsActivity.BETTING_AMOUNT)
-            bettingCurrency = bundle!!.getString(SettingsActivity.BETTING_CURRENCY)
-            isResetTrue = bundle!!.getBoolean(SettingsActivity.IS_RESET_TRUE)
-            initVariables()
-            setListeners()
-            populateData()
+
+        bettingCurrency = getCurrencySymbolFromStorage()
+        bettingAmount = getBettingAmountFromStorage()
+        if (bettingAmount == 0) {
+            val intent = Intent(this@PredictorActivity, SettingsActivity::class.java)
+            intent.putExtra(SettingsActivity.BETTING_AMOUNT, bettingAmount)
+            startActivityForResult(intent, 100)
+        }
+
+        populateData()
+        setListeners()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == 100) {
+            if (data != null) {
+                isResetTrue = data.getBooleanExtra(SettingsActivity.IS_RESET_TRUE, false)
+
+                bettingCurrency = data.getStringExtra(SettingsActivity.BETTING_CURRENCY)
+                if (bettingCurrency != getCurrencySymbolFromStorage()) {
+                    saveCurrencySymbolToStorage(bettingCurrency)
+                }
+
+                bettingAmount = data.getIntExtra(SettingsActivity.BETTING_AMOUNT, 0)
+                if (bettingAmount != getBettingAmountFromStorage()) {
+                    gain = 0
+                    saveBettingAmountToStorage(bettingAmount)
+                }
+                populateData()
+            }
+        }
+        if (resultCode == 0) {
+            finish()
         }
     }
 
-    private fun initVariables() {
-        gain = 0
-        sessions += 1
-        finalBet = bettingAmount
-    }
-
     private fun setListeners() {
-        imageView_settingButton.setOnClickListener { finish() }
+        imageView_settingButton.setOnClickListener {
+            val intent = Intent(this@PredictorActivity, SettingsActivity::class.java)
+            intent.putExtra(SettingsActivity.BETTING_AMOUNT, bettingAmount)
+            startActivityForResult(intent, 100)
+        }
         imageView_closeButton.setOnClickListener {
             startService(Intent(this@PredictorActivity, FloatingWidgetService::class.java))
             finish()
-            SettingsActivity.fa.finish()
         }
         imageView_reset.setOnClickListener {
             if (profit > 0) {
@@ -92,6 +113,9 @@ class PredictorActivity : AppCompatActivity() {
 
 
     private fun populateData() {
+        finalBet = bettingAmount
+
+        profit = getProfitFromStorage()
 
         list.add(getString(R.string.betting_box_black))
         list.add(getString(R.string.betting_box_red))
@@ -102,7 +126,7 @@ class PredictorActivity : AppCompatActivity() {
 
         if (isResetTrue) {
             gain = 0
-            sessions = 0
+            sessions = 1
             profit = 0
         }
         updateUi()
@@ -138,15 +162,43 @@ class PredictorActivity : AppCompatActivity() {
         saveProfitToStorage(profit)
     }
 
+    private fun saveBettingAmountToStorage(amount: Int) {
+        val sp = getSharedPreferences("roulette", Activity.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putInt(SettingsActivity.BETTING_AMOUNT, amount)
+        editor.commit()
+    }
+
+    private fun getBettingAmountFromStorage(): Int {
+        val sp = getSharedPreferences("roulette", Activity.MODE_PRIVATE)
+        return sp.getInt(SettingsActivity.BETTING_AMOUNT, 0)
+    }
+
     private fun saveProfitToStorage(profit: Int) {
         val sp = getSharedPreferences("roulette", Activity.MODE_PRIVATE)
         val editor = sp.edit()
-        editor.putInt("profit", profit)
+        editor.putInt(PROFIT, profit)
         editor.commit()
     }
 
     private fun getProfitFromStorage(): Int {
         val sp = getSharedPreferences("roulette", Activity.MODE_PRIVATE)
-        return sp.getInt("profit", 0)
+        return sp.getInt(PROFIT, 0)
+    }
+
+    private fun saveCurrencySymbolToStorage(symbol: String) {
+        val sp = getSharedPreferences("roulette", Activity.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putString(SettingsActivity.BETTING_CURRENCY, symbol)
+        editor.commit()
+    }
+
+    private fun getCurrencySymbolFromStorage(): String {
+        val sp = getSharedPreferences("roulette", Activity.MODE_PRIVATE)
+        return sp.getString(SettingsActivity.BETTING_CURRENCY, "")
+    }
+
+    companion object {
+        const val PROFIT = "profit"
     }
 }

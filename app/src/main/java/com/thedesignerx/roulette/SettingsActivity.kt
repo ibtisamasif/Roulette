@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity() {
 
-    private val bettingAmount = 0
+    private var bettingAmount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +46,10 @@ class SettingsActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner_currency.adapter = adapter
 
+        val bundle = intent.extras
+        if (bundle != null) {
+            bettingAmount = bundle.getInt(BETTING_AMOUNT)
+        }
         editText_bettingAmount.setText(bettingAmount.toString())
         editText_bettingAmount.setSelection(bettingAmount.toString().length)
 
@@ -62,7 +66,8 @@ class SettingsActivity : AppCompatActivity() {
                     intent.putExtra(BETTING_CURRENCY, spinner_currency.selectedItem.toString())
                     intent.putExtra(BETTING_AMOUNT, editText_bettingAmount.text.toString().toInt())
                     intent.putExtra(IS_RESET_TRUE, checkBox_reset.isChecked)
-                    startActivity(intent)
+                    setResult(100, intent)
+                    finish()
                 }
             }
         }
@@ -84,7 +89,7 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        startService(Intent(this@SettingsActivity, FloatingWidgetService::class.java))
+        //        startService(Intent(this@SettingsActivity, FloatingWidgetService::class.java))
         finish()
     }
 

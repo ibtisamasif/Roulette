@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SettingsActivity"
+            android:name=".PredictorActivity"
             android:theme="@style/MyTheme.AppCompat.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
         </activity>
 
         <activity
-            android:name=".PredictorActivity"
+            android:name=".SettingsActivity"
             android:theme="@style/MyTheme.AppCompat.Dialog"/>
 
         <service

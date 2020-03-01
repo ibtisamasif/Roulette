@@ -89,7 +89,7 @@ public class FloatingViewService extends Service {
                         //So that is click event.
                         if (XDiff < 10 && YDiff < 10) {
                             if (isViewCollapsed()) {
-                                Intent intent = new Intent(FloatingViewService.this, SettingsActivity.class);
+                                Intent intent = new Intent(FloatingViewService.this, PredictorActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
 

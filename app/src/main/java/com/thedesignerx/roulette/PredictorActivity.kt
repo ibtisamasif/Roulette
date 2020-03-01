@@ -72,12 +72,15 @@ class PredictorActivity : AppCompatActivity() {
             finish()
         }
         imageView_reset.setOnClickListener {
-            if (profit > 0) {
-                profit -= lastGain
-                sessions += 1
-                updateUi()
-                Toast.makeText(this@PredictorActivity, getString(R.string.resetting), Toast.LENGTH_SHORT).show()
-            }
+            gain = 0
+            updateUi()
+
+            //            if (profit > 0) {
+            //                profit -= lastGain
+            //                sessions += 1
+            //                updateUi()
+            //                Toast.makeText(this@PredictorActivity, getString(R.string.resetting), Toast.LENGTH_SHORT).show()
+            //            }
         }
         button_won.setOnClickListener {
             if (gain < 0) {

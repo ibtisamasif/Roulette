@@ -37,7 +37,6 @@ class PredictorActivity : AppCompatActivity() {
             intent.putExtra(SettingsActivity.BETTING_AMOUNT, bettingAmount)
             startActivityForResult(intent, 100)
         }
-
         populateData()
         setListeners()
     }
@@ -76,19 +75,14 @@ class PredictorActivity : AppCompatActivity() {
         imageView_reset.setOnClickListener {
             gain = 0
             updateUi()
-
-            //            if (profit > 0) {
-            //                profit -= lastGain
-            //                sessions += 1
-            //                updateUi()
-            //                Toast.makeText(this@PredictorActivity, getString(R.string.resetting), Toast.LENGTH_SHORT).show()
-            //            }
         }
         button_won.setOnClickListener {
             if (gain < 0) {
                 if (finalBet < (gain * -1)) {
+                    val lastGain = gain
                     gain += finalBet
-                    finalBet = (gain * -1) + bettingAmount
+                    finalBet = if ((lastGain * -1) >= bettingAmount * 8) ((lastGain * -1)) / 2 //If the current sessions gain is -8x bet or more and you get one bet correct, the next bet will be half the amount of current negative bets instead of 1x more than the current negative like it is now.
+                    else (lastGain * -1)
                 } else {
                     if (finalBet != (gain * -1)) {
                         sessions += 1

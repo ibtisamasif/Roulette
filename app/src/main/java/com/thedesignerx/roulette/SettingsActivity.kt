@@ -2,14 +2,15 @@ package com.thedesignerx.roulette
 
 import android.annotation.TargetApi
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.provider.Settings
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_settings.*
 import kotlin.system.exitProcess
@@ -22,6 +23,40 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.activity_dialoge)
+        val dialogButton = dialog.findViewById(R.id.imageView_nextButton) as ImageButton
+        val checkBox: CheckBox = dialog.findViewById(R.id.checkBox) as CheckBox
+        val editor = preferences.edit()
+        checkBox.isChecked = preferences.contains("checked") && preferences.getBoolean("checked", false) === true
+        if (checkBox.isChecked) {
+            editor.putBoolean("checked", true)
+            editor.apply()
+            dialogButton.setOnClickListener {
+                dialog.dismiss()
+            }
+        } else {
+            editor.putBoolean("checked", false)
+            editor.apply()
+            dialog.show()
+        }
+        checkBox.isChecked = preferences.contains("checked") && preferences.getBoolean("checked", false) === true
+        checkBox.setOnCheckedChangeListener { compoundButton, b ->
+            if (checkBox.isChecked) {
+                editor.putBoolean("checked", true)
+                editor.apply()
+                dialogButton.setOnClickListener {
+                    dialog.dismiss()
+                }
+
+            } else {
+                editor.putBoolean("checked", false)
+                editor.apply()
+                dialog.show()
+            }
+        }
+
         fa = this
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
@@ -41,6 +76,10 @@ class SettingsActivity : AppCompatActivity() {
 
         imageView_closeButton.setOnClickListener {
             startService(Intent(this@SettingsActivity, FloatingWidgetService::class.java))
+            finish()
+        }
+
+        imageView_closeScreen.setOnClickListener {
             finish()
         }
 

@@ -25,11 +25,8 @@
             android:theme="@style/MyTheme.AppCompat.Dialog"/>
 
         <service
-            android:name=".FloatingViewService"
-            android:enabled="true"
-            android:exported="false" />
-        <service
             android:name=".FloatingWidgetService"
+            android:process=":roulette_service"
             android:enabled="true"
             android:exported="false" />
     </application>

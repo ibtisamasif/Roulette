@@ -56,9 +56,6 @@ class PredictorActivity : AppCompatActivity() {
                 populateData()
             }
         }
-        if (resultCode == 0) {
-            finish()
-        }
     }
 
     private fun setListeners() {
@@ -160,8 +157,14 @@ class PredictorActivity : AppCompatActivity() {
         }
         textView_sessions.text = sessions.toString()
         textView_betNumber.text = finalBet.toString()
-        textView_betOn.text = RouletteUtils.getRandomElement(list)
 
+        val randomValue = RouletteUtils.getRandomElement(list)
+        textView_betOn.text = randomValue
+        when (randomValue) {
+            getString(R.string.betting_box_black) -> textView_betOn.setBackgroundResource(R.drawable.ic_background_black_round)
+            getString(R.string.betting_box_red) -> textView_betOn.setBackgroundResource(R.drawable.ic_background_red_round)
+            getString(R.string.betting_box_odd), getString(R.string.betting_box_even), getString(R.string.betting_box_1_to_18), getString(R.string.betting_box_19_to_36) -> textView_betOn.setBackgroundResource(R.color.colorTransparent)
+        }
         saveProfitToStorage(profit)
     }
 

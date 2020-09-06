@@ -156,9 +156,8 @@ class FloatingWidgetService : Service() {
                         if (inBounded) {
                             stopSelf()
                             inBounded = false
-                            //                            break
+                            return true
                         }
-
 
                         //Get the difference between initial coordinate and current coordinate
                         val x_diff = x_cord - x_init_cord

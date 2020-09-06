@@ -26,7 +26,6 @@
 
         <service
             android:name=".FloatingWidgetService"
-            android:process=":roulette_service"
             android:enabled="true"
             android:exported="false" />
     </application>

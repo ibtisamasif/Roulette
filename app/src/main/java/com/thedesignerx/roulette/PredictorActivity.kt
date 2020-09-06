@@ -19,6 +19,7 @@ class PredictorActivity : AppCompatActivity() {
     private var bettingCurrency = ""
     private var lastGain = 0
     private var finalBet = 0
+    private lateinit var randomValue: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,10 @@ class PredictorActivity : AppCompatActivity() {
 
         bettingCurrency = getCurrencySymbolFromStorage()
         bettingAmount = getBettingAmountFromStorage()
+
+        sessions = getSessionFromStorage()
+        gain = getGainFromStorage()
+
         if (bettingAmount == 0) {
             val intent = Intent(this@PredictorActivity, SettingsActivity::class.java)
             intent.putExtra(SettingsActivity.BETTING_AMOUNT, bettingAmount)
@@ -102,11 +107,15 @@ class PredictorActivity : AppCompatActivity() {
                 finalBet = bettingAmount
                 Toast.makeText(this@PredictorActivity, getString(R.string.session_completed).plus(Constants.SPACE_STRING).plus(bettingCurrency).plus(bettingAmount).plus(" amount has been added to your total profits."), Toast.LENGTH_SHORT).show()
             }
+
+            randomValue = RouletteUtils.getRandomElement(list)
             updateUi()
         }
         button_lost.setOnClickListener {
             gain -= finalBet
             finalBet = bettingAmount * 1
+
+            randomValue = RouletteUtils.getRandomElement(list)
             updateUi()
         }
     }
@@ -116,6 +125,10 @@ class PredictorActivity : AppCompatActivity() {
         finalBet = bettingAmount
 
         profit = getProfitFromStorage()
+        sessions = getSessionFromStorage()
+        gain = getGainFromStorage()
+        randomValue = getOnbetFromStorage()
+
 
         list.add(getString(R.string.betting_box_black))
         list.add(getString(R.string.betting_box_red))
@@ -157,8 +170,6 @@ class PredictorActivity : AppCompatActivity() {
         }
         textView_sessions.text = sessions.toString()
         textView_betNumber.text = finalBet.toString()
-
-        val randomValue = RouletteUtils.getRandomElement(list)
         textView_betOn.text = randomValue
         when (randomValue) {
             getString(R.string.betting_box_black) -> textView_betOn.setBackgroundResource(R.drawable.ic_background_black_round)
@@ -166,6 +177,9 @@ class PredictorActivity : AppCompatActivity() {
             getString(R.string.betting_box_odd), getString(R.string.betting_box_even), getString(R.string.betting_box_1_to_18), getString(R.string.betting_box_19_to_36) -> textView_betOn.setBackgroundResource(R.color.colorTransparent)
         }
         saveProfitToStorage(profit)
+        saveSessionToStorage(sessions)
+        saveGainToStorage(gain)
+        saveOnbetToStorage(randomValue)
     }
 
     private fun saveBettingAmountToStorage(amount: Int) {
@@ -204,7 +218,49 @@ class PredictorActivity : AppCompatActivity() {
         return sp.getString(SettingsActivity.BETTING_CURRENCY, "")
     }
 
+    private fun saveSessionToStorage(sessions: Int) {
+        val sp = getSharedPreferences("roulette", Activity.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putInt(SESSIONS, sessions)
+        editor.commit()
+    }
+
+    private fun getSessionFromStorage(): Int {
+        val sp = getSharedPreferences("roulette", Activity.MODE_PRIVATE)
+        return sp.getInt(SESSIONS, 0)
+    }
+
+    private fun saveGainToStorage(gain: Int) {
+        val sp = getSharedPreferences("roulette", Activity.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putInt(GAIN, gain)
+        editor.commit()
+    }
+
+    private fun getGainFromStorage(): Int {
+        val sp = getSharedPreferences("roulette", Activity.MODE_PRIVATE)
+        return sp.getInt(GAIN, 0)
+    }
+
+
+    private fun saveOnbetToStorage(onbet: String) {
+        val sp = getSharedPreferences("roulette", Activity.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putString(ONBET, onbet)
+        editor.commit()
+    }
+
+    private fun getOnbetFromStorage(): String {
+        val sp = getSharedPreferences("roulette", Activity.MODE_PRIVATE)
+        return sp.getString(ONBET, "")
+    }
+
+
     companion object {
         const val PROFIT = "profit"
+        const val SESSIONS = "sessions"
+        const val GAIN = "gain"
+        const val ONBET = "onbet"
+
     }
 }

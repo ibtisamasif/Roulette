@@ -10,7 +10,10 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.provider.Settings
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.CheckBox
+import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_settings.*
 import kotlin.system.exitProcess
@@ -33,9 +36,6 @@ class SettingsActivity : AppCompatActivity() {
         if (checkBox.isChecked) {
             editor.putBoolean("checked", true)
             editor.apply()
-            dialogButton.setOnClickListener {
-                dialog.dismiss()
-            }
         } else {
             editor.putBoolean("checked", false)
             editor.apply()
@@ -46,9 +46,6 @@ class SettingsActivity : AppCompatActivity() {
             if (checkBox.isChecked) {
                 editor.putBoolean("checked", true)
                 editor.apply()
-                dialogButton.setOnClickListener {
-                    dialog.dismiss()
-                }
 
             } else {
                 editor.putBoolean("checked", false)
@@ -57,6 +54,9 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
 
+        dialogButton.setOnClickListener {
+            dialog.dismiss()
+        }
         fa = this
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
